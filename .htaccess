@@ -1,0 +1,13 @@
+RewriteEngine on
+#povoli prepisovani url adresy
+
+RewriteCond %{REQUEST_FILENAME} !-f
+#nezpracuje soubory napr js css ...
+RewriteCond %{REQUEST_FILENAME} !-d
+#nezpracuje adresare
+
+#pravidlo pro prepis adresy
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+#do index.php preda vse od prvniho lomitka do konce
+#L - last rule - po nem uz se NIC nevykona
+#QSA - vsechna data od / do konce da do $1
