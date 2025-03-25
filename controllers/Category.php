@@ -11,10 +11,13 @@ class Category extends Controller {
         $children = $categorymodel->get_children($id);
         $books = $categorymodel->get_children_books($id, []);
 
-        parent::index();
         $this->showTemplate(['category' => $category['name'],
                              'children' => $children,
                              'books' => $books], 'category');
         $this->showTemplate(null, 'layout/footer');
+    }
+
+    public function update_category(int $id) {
+
     }
 }

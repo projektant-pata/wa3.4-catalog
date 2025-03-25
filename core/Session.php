@@ -27,5 +27,8 @@ trait Session {
     public function logged_in() {
         return $this->get_session('loggedin');
     }
+    public function destroy_session($key) {
+        unset($_SESSION[$key]);
+    }
 
 }

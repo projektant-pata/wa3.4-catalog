@@ -40,4 +40,27 @@ class Category_model extends Model {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function get_all_categories() {
+        $sql = "SELECT c.*, p.name as 'parent' FROM category c LEFT JOIN category p ON c.id_parent = p.id";
+        $stmt = $this->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function save_category($name, $parent) {
+        $sql = "INSERT INTO category (name, id_parent) VALUES(?, ?)";
+        $stmt = $this->prepare($sql);
+        $stmt->execute([$name, $parent]);
+    }
+
+    public function update_category($id, $name, $parent) {
+        $sql = "UPDATE category SET name = ?, id_parent = ? WHERE id = ?";
+        $stmt = $this->prepare($sql);
+        $stmt->execute([$name, $parent, $id]);
+    }
+    public function delete_category($id) {
+        $sql = "DELETE FROM category WHERE id = ?";
+        $stmt = $this->prepare($sql);
+        $stmt->execute([$id]);
+    }
 }

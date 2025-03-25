@@ -2,7 +2,7 @@
 class User extends Controller {
 
     public function __construct() {
-        if($this->logged_in()) redir('user');
+        if($this->logged_in()) redir('admin');
     }
 
     public function index() {
@@ -26,9 +26,9 @@ class User extends Controller {
             }else{
                 $this->set_flash('gg heslo');
             }
+
+        }else
             $this->set_flash('gg user');
-        }
-//        $this->set_flash('špatné přihlášení');
         redir('user');  //nepovedlo se prihlaseni
     }
 
@@ -43,11 +43,16 @@ class User extends Controller {
         $usermodel = $this->load_model('User_model');
    
         $name = htmlspecialchars($_POST['name']);
-        $email = htmlspecialchars($_POST['email']);
-        $password = htmlspecialchars($_POST['password']); 
+        $password = htmlspecialchars($_POST['password']);
 
         $hash = password_hash($password, PASSWORD_DEFAULT);
-        $usermodel->save_user($name, $email, $hash);
+        $usermodel->save_user($name, $hash);
+        redir('user');
+    }
+
+    public function logout() {
+        $this->destroy_session('loggedin');
+        $this->destroy_session('loggeduser');
         redir('user');
     }
 }
